@@ -10,7 +10,7 @@
 `hust_login.py`和`hust_login_nocrypt.py`使用Python内置的`urllib`，使用时直接用python3运行即可
 
 * **hust_login.py** 依赖`Pycrypto`或`Pycryptodome`进行密码的加密，需要用户自行安装**两模块中的任意一个**
-* **hust_login_nocrypt.py** 不依赖任何第三方模块，但是**不进行加密**，只是在原版本的POST参数后添加了`passwordEncrypt=no`以告知服务端接收明文
+* **hust_login_nocrypt.py** 不依赖任何第三方模块，但是**不进行加密**，只是在原版本的POST参数后添加了`passwordEncrypt=false`以告知服务端接收明文
 
 
 ### Shell脚本
