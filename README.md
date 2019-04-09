@@ -17,7 +17,7 @@
 ---
 如果您~~不是Python选手~~出于某些原因没有安装Python，可以使用本脚本登录
 
-**脚本依赖**：`curl`,`openssl`,`grep`以及一个bash-compatible的shell，大多数Linux发行版（甚至macOS）都已包含上述包~~（Alpine？不存在的）~~
+**脚本依赖**：`curl`,`openssl`,`grep`以及一个bash-compatible的shell，大多数Linux发行版（甚至macOS）都已包含上述包。~~Alpine？不存在的~~
 
 为了使用本脚本，您需要下载`hust_login.sh`以及`pubkey.pub`并置于同一目录中，后者存放了加密使用的RSA公钥
 
