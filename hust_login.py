@@ -36,6 +36,7 @@ def main():
     parser.add_argument("-u", "--user", help="specify username in command line")
     parser.add_argument("-q", "--quiet", help = "only output when error occurs", action = "store_true")
     parser.add_argument("-p", "--pass", help = "specify password in command line, if used without any value, read from stdin without any prompt", const = "", default = None, nargs = "?", dest = "pw")
+    parser.add_argument("-c", "--cipher", help = "specify password cipher text in hex, will override '-p'")
     args = parser.parse_args()
     try:
         resp = urllib.request.urlopen("http://123.123.123.123",timeout=5)
@@ -65,9 +66,11 @@ def main():
             pw = getpass(prompt='')
         else:
             pw = args.pw
+    elif args.cipher:
+        pass
     else:
         pw = getpass()
-    post_data = "userId="+userId+"&password="+binascii.hexlify(encr_pw(pw)).decode('ascii')+"&service=&queryString="+queryString+"&operatorPwd=&validcode=&passwordEncrypt=true"
+    post_data = "userId="+userId+"&password="+(args.cipher if args.cipher else binascii.hexlify(encr_pw(pw)).decode('ascii'))+"&service=&queryString="+queryString+"&operatorPwd=&validcode=&passwordEncrypt=true"
     resp = urllib.request.urlopen(post_url,bytes(post_data,'us-ascii'))
     authResult = json.loads(resp.peek().decode('utf-8'))            
     if (authResult["result"] == 'success'):
@@ -77,6 +80,7 @@ def main():
         print("Message from server: "+authResult["message"],file=sys.stderr)
         print("Login failed!",file=sys.stderr)
         exit(1)
+    exit(0)
 
 if __name__ == '__main__':
     main()
