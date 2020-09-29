@@ -28,7 +28,7 @@ queryString = urllib.parse.quote_plus(urllib.parse.quote_plus(queryString))
 print("Enter userId:")
 userId = input()
 pw = getpass()
-post_data = "userId="+userId+"&password="+pw+"&service=&queryString="+queryString+"&operatorPwd=&validcode=&passwordEncrypt=false"
+post_data = "userId="+userId+"&password="+pw+"&service=&queryString="+queryString+"&operatorPwd=&operatorUserId=&validcode=&passwordEncrypt=false"
 resp = urllib.request.urlopen(post_url,bytes(post_data,'us-ascii'))
 authResult = json.loads(resp.peek().decode('utf-8'))
 print("Message from server: "+authResult["message"])

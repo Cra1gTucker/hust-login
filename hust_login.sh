@@ -62,7 +62,7 @@ echo -n `rev <<< "$PASS"` >> $PADDED
 
 # encrypt and build post data
 PASS=`cat $PADDED|openssl rsautl -encrypt -pubin -inkey "$DIR/pubkey.pub" -raw|xxd -ps -c 256`
-POST="userId=$USER&password=$PASS&service=&queryString=$QS&operatorPwd=&validcode=&passwordEncrypt=true"
+POST="userId=$USER&password=$PASS&service=&queryString=$QS&operatorPwd=&operatorUserId=&validcode=&passwordEncrypt=true"
 rm $PADDED
 
 # get response

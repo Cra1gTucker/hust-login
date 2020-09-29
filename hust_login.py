@@ -19,7 +19,7 @@ def get_zerobytes(N):
     return b'\0' * N
 
 def encr_pw(pw):
-    key = RSA.construct([0x9c2899b8ceddf9beafad2db8e431884a79fd9b9c881e459c0e1963984779d6612222cee814593cc458845bbba42b2d3474c10b9d31ed84f256c6e3a1c795e68e18585b84650076f122e763289a4bcb0de08762c3ceb591ec44d764a69817318fbce09d6ecb0364111f6f38e90dc44ca89745395a17483a778f1cc8dc990d87c3,0x10001])
+    key = RSA.construct([0x94dd2a8675fb779e6b9f7103698634cd400f27a154afa67af6166a43fc26417222a79506d34cacc7641946abda1785b7acf9910ad6a0978c91ec84d40b71d2891379af19ffb333e7517e390bd26ac312fe940c340466b4a5d4af1d65c3b5944078f96a1a51a5a53e4bc302818b7c9f63c4a1b07bd7d874cef1c3d4b2f5eb7871,0x10001])
     ohdave=""
     length=len(pw)
     for i in range(0,length):
@@ -70,7 +70,7 @@ def main():
         pass
     else:
         pw = getpass()
-    post_data = "userId="+userId+"&password="+(args.cipher if args.cipher else binascii.hexlify(encr_pw(pw)).decode('ascii'))+"&service=&queryString="+queryString+"&operatorPwd=&validcode=&passwordEncrypt=true"
+    post_data = "userId="+userId+"&password="+(args.cipher if args.cipher else binascii.hexlify(encr_pw(pw)).decode('ascii'))+"&service=&queryString="+queryString+"&operatorPwd=&operatorUserId=&validcode=&passwordEncrypt=true"
     resp = urllib.request.urlopen(post_url,bytes(post_data,'us-ascii'))
     authResult = json.loads(resp.peek().decode('utf-8'))            
     if (authResult["result"] == 'success'):

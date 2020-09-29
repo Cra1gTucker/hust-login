@@ -13,7 +13,7 @@ $qs = $Matches.0
 $ecqs = [uri]::EscapeDataString($qs)
 $user = Read-Host 'Username'
 $pass = Read-Host 'Password' -AsSecureString
-$postParams = @{userId=$user;password=[Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($pass));service='';queryString=$ecqs;operatorPwd='';validcode='';passwordEncrypt='false'}
+$postParams = @{userId=$user;password=[Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($pass));service='';queryString=$ecqs;operatorPwd='';operatorUserId='';validcode='';passwordEncrypt='false'}
 $response = (Invoke-Webrequest -Uri $url -Method POST -Body $postParams)
 Write-Host $response
 pause
