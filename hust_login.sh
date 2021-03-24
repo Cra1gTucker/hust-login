@@ -58,10 +58,29 @@ do
   echo -ne '\0' >> $PADDED
   LEN=$(expr $LEN + 1)
 done
-echo -n `rev <<< "$PASS"` >> $PADDED
+
+# echo -n `rev <<< "$PASS"` >> $PADDED
+echo -n $PASS >> $PADDED
+# remove the reverse operation due to
+# the javascript RSA library implementation
+# has Little-endian encoding method
+# while openssl does the opposite. (May be?)
 
 # encrypt and build post data
-PASS=`cat $PADDED|openssl rsautl -encrypt -pubin -inkey "$DIR/pubkey.pub" -raw|xxd -ps -c 256`
+# PASS=`cat $PADDED|openssl rsautl -encrypt -pubin -inkey "$DIR/pubkey.pub" -raw|xxd -ps -c 256`
+PASS=`cat $PADDED|openssl rsautl -encrypt -pubin -inkey "$DIR/pubkey_fix_exp.pem" -raw|hexdump -ve '1/1 "%.2x"'`
+# the file "pubkey.pub" is constructed with a bad exponent value by the origin developer
+# (May be he accidently introduced a dec-to-hex transform?)
+# fix this by reconstruct a new pem-formatted public key file
+# by feeding an asn1 config file to openssl which would generate a der key file
+# then transform it to a pem key file
+
+# also chang the xxd utility to hexdump as my device does not has the formmer one built in
+
+# TODO: may rm all dependence for ultra-lowend device?
+
+# echo $PASS
+# TODO: add remeber encrypted password
 POST="userId=$USER&password=$PASS&service=&queryString=$QS&operatorPwd=&operatorUserId=&validcode=&passwordEncrypt=true"
 rm $PADDED
 
