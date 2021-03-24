@@ -49,6 +49,8 @@ QS=`rawurlencode $(rawurlencode "$QS")`
 echo -n "Password:"
 read -s PASS
 echo -e '\n'
+PASS=`rawurlencode $(rawurlencode "$PASS")`
+# keep the operation up to the official one
 LEN=$(echo -n "$PASS"|wc -c)
 
 # start padding password, assuming password is LESS than 128 bytes long
