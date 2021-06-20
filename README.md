@@ -1,6 +1,8 @@
 # hust-login
 **Command line** login scripts for HUST\_WIRELESS Wi-Fi, which enables logging into the campus network **without a browser**.
 
+**2021-3-24**： 发现Bash脚本加密时openssl报错，排查加密出错原因，结果发现pubkey.pub有问题(E值错了)，但修正后还是登录失败。再对网页登录界面进行调试，结果发现在网页登录时调用的rsa实现库采用的端序方式似乎与openssl不一样，故Bash脚本不需要反转密码，同时为密码增加了两次URL Encode以与官方网页保持一致 *PS:不懂Python/Powershell，暂时不改*
+
 **2020-9-29**： 学校工作人员认为老的加密算法不安全（JavaScript注释里写着的原话），于是修改了RSA密钥和服务端的解密方式。~~好像没有对加密算法做任何更改呢。~~ 现在服务端不再接受`PKCS#1 V1.5` padding的密文了，只接受~~不知从哪复制过来的~~JavaScript库里写的一种奇怪的padding，而恰好`Pycryptodome`又不支持自己写padding，更巧的是deprecated的`Pycrypto`却正好能够方便地实现这种padding，理论上使用后者或者shell脚本因为本来就是手写的padding甚至几乎不用改代码（正在测试当中）。
 
 由于某些不可描述的原因，目前校园网密码使用了RSA加密而不是之前的明文传输。经检验[hust\_wireless.py](https://github.com/haoqixu/hust_wireless)仍然可以使用，**但是没有任何安全性**，本repo中含有根据当前登录方式重写的登录脚本。
