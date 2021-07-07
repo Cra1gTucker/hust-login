@@ -26,14 +26,12 @@ class REncrypt(object):
         return crypto.hex()
     def _pad_for_encryption(self, message, target_length):
         message = message[::-1]
-        max_msglength = target_length - 11
         msglength = len(message)
  
         padding = b''
         padding_length = target_length - msglength - 3
  
-        for i in range(padding_length):
-            padding += b'\x00'
+        padding += b'\x00' * padding_length
  
         return b''.join([b'\x00\x00',padding,b'\x00',message])
     def _encrypt(self, message, pub_key):
@@ -61,7 +59,7 @@ def main():
     parser.add_argument("-c", "--cipher", help = "specify password cipher text in hex, will override '-p'")
     args = parser.parse_args()
     try:
-        resp = urllib.request.urlopen("http://192.168.50.1",timeout=5)
+        resp = urllib.request.urlopen("http://123.123.123.123",timeout=5)
     except urllib.error.URLError:
         print("Failed to get redirect info, maybe already logged in?", file=sys.stderr)
         exit(1)
